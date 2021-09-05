@@ -23,7 +23,7 @@ namespace JobsManager
                 }));
             }
             //jobExecutor.Start(3);
-            Thread.Sleep(500);
+            Thread.Sleep(5000);
             jobExecutor.Stop();
             jobExecutor.Clear();
             Console.ReadKey();
