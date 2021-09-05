@@ -10,14 +10,13 @@ namespace JobsManager
         public int Amount { get; }
         public Semaphore semaphore;
         public static Dictionary<int, Thread> ThreadsPool = new Dictionary<int, Thread>();
-
-        /*
-        public void JobExecutor()
+       
+        public JobExecutor()
         {
-            ThreadsPool = new Dictionary<int, Thread>();
+            //semaphore = new Semaphore(maxConcurrent, maxConcurrent);
         }
-        */
-        
+
+
         public void Start(int maxConcurrent)
         {
             semaphore = new Semaphore(maxConcurrent, maxConcurrent);
@@ -25,18 +24,23 @@ namespace JobsManager
 
         public void Stop()
         {
-            semaphore.Release();
+            Console.WriteLine("Завершаем все задачи");
+            //semaphore.Release();
+            //semaphore.Dispose();
         }
 
         public void Add(Action action)
         {
+            semaphore.WaitOne();
             Thread myThread = new Thread(action.Invoke);
             ThreadsPool.Add(myThread.GetHashCode(),myThread);
-            semaphore.WaitOne();
+            myThread.Start();
+            semaphore.Release();
         }
 
         public void Clear()
         {
+            Console.WriteLine("Закрываем семафор");
             semaphore.Close();
         }
     }
