@@ -33,7 +33,7 @@ namespace JobsManager
         {
             semaphore.WaitOne();
             Thread myThread = new Thread(action.Invoke);
-            ThreadsPool.Add(myThread.GetHashCode(),myThread);
+            //ThreadsPool.Add(myThread.GetHashCode(),myThread);
             myThread.Start();
             semaphore.Release();
         }

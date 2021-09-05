@@ -9,6 +9,7 @@ namespace JobsManager
         {
             JobExecutor jobExecutor = new JobExecutor();
             jobExecutor.Start(3);
+            /*
             jobExecutor.Add(() =>
             {
                 Console.WriteLine("Работа 1 началась");
@@ -39,12 +40,31 @@ namespace JobsManager
                 Thread.Sleep(1000);
                 Console.WriteLine("Работа 5 завершилась");
             });
+            */
+            
+            for (int i = 1; i <= 5; i++)
+            {
+                /*
+                jobExecutor.Add(() =>
+                {
+                    Console.WriteLine($"Работа {i} началась");
+                    Thread.Sleep(1000);
+                    Console.WriteLine($"Работа {i} завершилась");
+                });
+                */
+                jobExecutor.Add(new Action(() =>
+                {
+                    int count = i;
+                    Console.WriteLine($"Работа {count} началась");
+                    Thread.Sleep(1000);
+                    Console.WriteLine($"Работа {count} завершилась");
+                }));
+            }
             //jobExecutor.Start(3);
             Thread.Sleep(8000);
             jobExecutor.Stop();
             jobExecutor.Clear();
             Console.ReadKey();
-
         }
     }
 }
