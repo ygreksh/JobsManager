@@ -9,7 +9,7 @@ namespace JobsManager
     {
         public int Amount { get; }
         public Semaphore semaphore;
-        public static Dictionary<int, Thread> ThreadsPool = new Dictionary<int, Thread>();
+        //public static Dictionary<int, Thread> ThreadsPool = new Dictionary<int, Thread>();
        
         public JobExecutor()
         {

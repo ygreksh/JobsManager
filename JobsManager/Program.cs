@@ -9,59 +9,21 @@ namespace JobsManager
         {
             JobExecutor jobExecutor = new JobExecutor();
             jobExecutor.Start(3);
-            /*
-            jobExecutor.Add(() =>
-            {
-                Console.WriteLine("Работа 1 началась");
-                Thread.Sleep(1000);
-                Console.WriteLine("Работа 1 завершилась");
-            });
-            jobExecutor.Add(() =>
-            {
-                Console.WriteLine("Работа 2 началась");
-                Thread.Sleep(1000);
-                Console.WriteLine("Работа 2 завершилась");
-            });
-            jobExecutor.Add(() =>
-            {
-                Console.WriteLine("Работа 3 началась");
-                Thread.Sleep(1000);
-                Console.WriteLine("Работа 3 завершилась");
-            });
-            jobExecutor.Add(() =>
-            {
-                Console.WriteLine("Работа 4 началась");
-                Thread.Sleep(1000);
-                Console.WriteLine("Работа 4 завершилась");
-            });
-            jobExecutor.Add(() =>
-            {
-                Console.WriteLine("Работа 5 началась");
-                Thread.Sleep(1000);
-                Console.WriteLine("Работа 5 завершилась");
-            });
-            */
             
-            for (int i = 1; i <= 5; i++)
+            for (int i = 0; i < 5; i++)
             {
-                /*
-                jobExecutor.Add(() =>
-                {
-                    Console.WriteLine($"Работа {i} началась");
-                    Thread.Sleep(1000);
-                    Console.WriteLine($"Работа {i} завершилась");
-                });
-                */
+                
                 jobExecutor.Add(new Action(() =>
                 {
                     int count = i;
                     Console.WriteLine($"Работа {count} началась");
                     Thread.Sleep(1000);
                     Console.WriteLine($"Работа {count} завершилась");
+                    Thread.Sleep(1000);
                 }));
             }
             //jobExecutor.Start(3);
-            Thread.Sleep(8000);
+            Thread.Sleep(500);
             jobExecutor.Stop();
             jobExecutor.Clear();
             Console.ReadKey();
