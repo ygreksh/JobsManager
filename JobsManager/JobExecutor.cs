@@ -8,12 +8,13 @@ namespace JobsManager
     public class JobExecutor : IJobExecutor
     {
         public int Amount { get; }
-        public Semaphore semaphore;
+        public static Semaphore semaphore;
         //public static Dictionary<int, Thread> ThreadsPool = new Dictionary<int, Thread>();
-       
+        public List<Thread> _list;
         public JobExecutor()
         {
             //semaphore = new Semaphore(maxConcurrent, maxConcurrent);
+            _list = new List<Thread>();
         }
 
 
@@ -32,16 +33,25 @@ namespace JobsManager
         public void Add(Action action)
         {
             semaphore.WaitOne();
-            Thread myThread = new Thread(action.Invoke);
-            //ThreadsPool.Add(myThread.GetHashCode(),myThread);
+            Thread myThread = new Thread(() =>
+            {
+                action.Invoke();
+                int r  = semaphore.Release();
+                Console.WriteLine($"В семафоре {r} потоков");
+            });
+            _list.Add(myThread);
             myThread.Start();
-            semaphore.Release();
+            //myThread.Join();
+            //int r  = semaphore.Release();
+            //myThread.Join();
+            //Console.WriteLine($"В семафоре {r} потоков");
         }
 
         public void Clear()
         {
             Console.WriteLine("Закрываем семафор");
             semaphore.Close();
+            _list.Clear();
         }
     }
 }
